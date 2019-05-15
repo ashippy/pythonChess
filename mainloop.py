@@ -196,7 +196,7 @@ while running:
                             kingMoves = king.moves(board)
                             safeKingMoves = removeCheck(board, kingMoves, checkPlayer)
                             if safeKingMoves == 'check mate':
-                                moveList = queen.moves(board)
+                                moveList = [a1, a2, a3, a4, a5, a6, a7, a8, b1, b2, b3, b4, b5, b6, b7, b8, c1, c2, c3, c4, c5, c6, c7, c8, d1, d2, d3, d4, d5, d6, d7, d8, e1, e2, e3]
 
                                 print(moveList)
                             else:
@@ -260,19 +260,19 @@ while running:
             #print(compMoveList)
             moveList = ''
             board = Board.fixGrid(board)
-            '''
+
             checkComputer = playerInCheck(board, computerking.pos)
             if checkComputer != False:
                 kingMoves = computerking.moves(board)
                 safeKingMoves = removeCheck(board, kingMoves, checkComputer)
                 if safeKingMoves == "check mate":
-                    moveList = queen.moves(board)
+                    moveList = [a1, a2, a3, a4, a5, a6, a7, a8, b1, b2, b3, b4, b5, b6, b7, b8, c1, c2, c3, c4, c5, c6, c7, c8, d1, d2, d3, d4, d5, d6]
                     print(moveList)
                 else:
                     moveList = []
                     moveList.append(safeKingMoves)
                     print(moveList)
-            '''
+
             Board.printBoard(board, moveList, screen)
             pygame.display.flip()
             # if randint == 2:

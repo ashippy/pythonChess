@@ -72,9 +72,36 @@ class Piece(object):
         if self.player == 'white':
             for row in board:
                 for piece in row:
-                    if piece != 0:
+                    if piece != 0 and piece.name != 'p':
+                        if piece.player == 'black' and piece.name != 'k':
+                            allThreatenedSpots.append(piece.moves(board))
+                    if piece != 0 and piece.name == 'p' and piece.player == 'black':
+                        dangerMoves = []
+                        column, row = list(piece.pos.strip().lower())
+                        row = int(row) - 1
+                        column = Piece.fromLettertoNumb[column]
+                        dangerMoves.append([row + 1, column + 1])
+                        dangerMoves.append([row + 1, column - 1])
+                        temp = [i for i in dangerMoves if i[0] >= 0 and i[1] >= 0 and i[0]<8 and i[1]<8]
+                        pawnDanger = ["".join([Piece.fromNumbtoLetter[i[1]], str(i[0] + 1)]) for i in temp]
+                        allThreatenedSpots.append(pawnDanger)
+
+        else:
+            for row in board:
+                for piece in row:
+                    if piece != 0 and piece.name != 'p':
                         if piece.player == 'white' and piece.name != 'k':
-                            allThreatenedSpots = piece.moves(board)
+                            allThreatenedSpots.append(piece.moves(board))
+                    if piece != 0 and piece.name == 'p' and piece.player == 'white':
+                        dangerMoves = []
+                        column, row = list(piece.pos.strip().lower())
+                        row = int(row) - 1
+                        column = Piece.fromLettertoNumb[column]
+                        dangerMoves.append([row - 1, column + 1])
+                        dangerMoves.append([row - 1, column - 1])
+                        temp = [i for i in dangerMoves if i[0] >= 0 and i[1] >= 0 and i[0]<8 and i[1]<8]
+                        pawnMoves = ["".join([self.fromNumbtoLetter[i[1]], str(i[0] + 1)]) for i in temp]
+                        allThreatenedSpots.append(pawnMoves)
         allMovesFlat = [item for sublist in allThreatenedSpots for item in sublist]
         return allMovesFlat
 
@@ -401,9 +428,13 @@ class King(Piece):
         validMoves = Piece.confirmValidMove(self, allPossibleMoves, chessBoard)
 
         threatened = Piece.allThreatenedSpots(self, chessBoard)
+        print("here are all the threatened piecces")
+        print(threatened)
         noCheck = []
         for move in validMoves:
             if move not in threatened:
+                print("Checking if this move is in threatened moves")
+                print(move)
                 noCheck.append(move)
 
         return noCheck

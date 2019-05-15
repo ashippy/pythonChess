@@ -161,8 +161,7 @@ def getComputerPieces(board):
     for row in board:
         for piece in row:
             if isinstance(piece,Classes.Piece) and piece.player == 'white':
-                if piece.name != 'k':
-                    computerPieces.append(piece)
+                computerPieces.append(piece)
     return computerPieces
 
 
